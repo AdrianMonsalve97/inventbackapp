@@ -6,5 +6,4 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ListarProductosPorEmpresaQuery {
-    private String nit;  // Ahora buscamos por NIT, no UUID
-}
+    private String nit;

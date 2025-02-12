@@ -24,36 +24,29 @@ public class ClienteController {
     private final ClienteCommandHandler clienteCommandHandler;
     private final ClienteQueryHandler clienteQueryHandler;
 
-    // Crear un nuevo cliente
     @PostMapping
     public ResponseEntity<Cliente> crearCliente(@RequestBody CrearClienteCommand command) {
         Cliente cliente = clienteCommandHandler.handle(command);
         return ResponseEntity.ok(cliente);
     }
 
-    // Actualizar un cliente existente
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> actualizarCliente(@PathVariable UUID id, @RequestBody ActualizarClienteCommand command) {
         command = new ActualizarClienteCommand(id, command.getNombre(), command.getDireccion(), command.getTelefono());
         Cliente cliente = clienteCommandHandler.handle(command);
         return cliente != null ? ResponseEntity.ok(cliente) : ResponseEntity.notFound().build();
     }
-
-    // Eliminar un cliente
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable UUID id) {
         boolean eliminado = clienteCommandHandler.handle(new EliminarClienteCommand(id));
         return eliminado ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
-
-    // Obtener todos los clientes
     @GetMapping("/list")
     public ResponseEntity<List<Cliente>> obtenerClientes() {
         List<Cliente> clientes = clienteQueryHandler.obtenerClientes();
         return ResponseEntity.ok(clientes);
     }
 
-    // Obtener un cliente por ID
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> obtenerCliente(@PathVariable UUID id) {
         Optional<Cliente> clienteOptional = clienteQueryHandler.obtenerCliente(id);

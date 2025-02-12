@@ -22,7 +22,6 @@ public class ActualizarEmpresaUseCase {
         Empresa empresa = empresaRepository.findById(command.getNit())
                 .orElseThrow(() -> new EntityNotFoundException("Empresa no encontrada con ID: " + command.getId()));
 
-        // 🔹 Actualizamos los datos
         empresa.setNombre(command.getNombre());
         empresa.setDireccion(command.getDireccion());
         empresa.setTelefono(command.getTelefono());

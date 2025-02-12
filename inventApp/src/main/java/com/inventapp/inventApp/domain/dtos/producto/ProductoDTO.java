@@ -2,7 +2,7 @@ package com.inventapp.inventApp.domain.dtos.producto;
 
 import com.inventapp.inventApp.domain.models.write.Categoria;
 import com.inventapp.inventApp.domain.models.write.Producto;
-import com.inventapp.inventApp.domain.models.write.Empresa; // Asegúrate de importar la clase Empresa
+import com.inventapp.inventApp.domain.models.write.Empresa;
 import lombok.*;
 
 import java.util.Collections;
@@ -24,8 +24,8 @@ public class ProductoDTO {
     private double precio;
     private String moneda;
     private double precioConvertido;
-    private String empresaNit; // Cambiado de UUID a String para representar el NIT
-    private Set<String> categorias; // Set de nombres de las categorías
+    private String empresaNit;
+    private Set<String> categorias;
     private boolean activo;
 
     public ProductoDTO(Producto producto) {
@@ -37,15 +37,13 @@ public class ProductoDTO {
         this.moneda = producto.getMoneda();
         this.precioConvertido = producto.getPrecioConvertido();
 
-        // Si la empresa no es nula, asigna su NIT. Asegúrate de tener el getter `getNit` en la clase Empresa.
         this.empresaNit = (producto.getEmpresa() != null) ? producto.getEmpresa().getNit() : null;
 
-        // Convertir los UUID de categorías a nombres
         this.categorias = producto.getCategorias() != null
                 ? producto.getCategorias().stream()
-                .map(Categoria::getNombre) // Obtener el nombre de la categoría
+                .map(Categoria::getNombre)
                 .collect(Collectors.toSet())
-                : Collections.emptySet();  // Evitar null en categorías
+                : Collections.emptySet();
 
         this.activo = producto.isActivo();
     }

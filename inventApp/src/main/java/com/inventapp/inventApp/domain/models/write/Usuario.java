@@ -61,7 +61,6 @@ public class Usuario {
     private EstadoUsuario estadoUsuario = EstadoUsuario.ACTIVO;
 
     public boolean tienePermiso() {
-        // Implementar lógica de permisos aquí
         throw new UnsupportedOperationException("Método no implementado.");
     }
 }

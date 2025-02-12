@@ -26,7 +26,6 @@ public class ListadoUsuariosDTO {
     private Rol rol;
     private EstadoUsuario estadoUsuario;
 
-    // Constructor sin password, ya que no es necesario en el DTO de listado
     public ListadoUsuariosDTO(@NotNull String username, @Email @NotNull String email, Rol rol, EstadoUsuario estadoUsuario) {
         this.username = username;
         this.email = email;

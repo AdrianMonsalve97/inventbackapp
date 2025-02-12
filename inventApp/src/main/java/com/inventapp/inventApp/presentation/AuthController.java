@@ -24,7 +24,7 @@ public class AuthController {
 
     @Operation(summary = "Inicio de sesión", description = "Permite a un usuario iniciar sesión proporcionando su nombre de usuario y contraseña. Retorna un token JWT.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso, devuelve el token JWT.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))), // Changed to LoginResponse
+            @ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso, devuelve el token JWT.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))),
             @ApiResponse(responseCode = "400", description = "Error en la solicitud. Verifica las credenciales.", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "401", description = "Credenciales inválidas.", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content(mediaType = "application/json"))

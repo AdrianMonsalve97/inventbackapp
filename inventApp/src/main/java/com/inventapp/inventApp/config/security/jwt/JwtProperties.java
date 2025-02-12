@@ -20,9 +20,9 @@ public class JwtProperties {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder() // Use parserBuilder()
+            Jwts.parserBuilder()
                     .setSigningKey(secret)
-                    .build() // Call build() on the builder
+                    .build()
                     .parse(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
@@ -32,9 +32,9 @@ public class JwtProperties {
 
     public String getUsernameFromToken(String token) {
         try {
-            Claims claims = Jwts.parserBuilder() // Use parserBuilder()
+            Claims claims = Jwts.parserBuilder()
                     .setSigningKey(secret)
-                    .build() // Call build() on the builder
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
             return claims.getSubject();
@@ -45,9 +45,9 @@ public class JwtProperties {
 
     public String getRoleFromToken(String token) {
         try {
-            Claims claims = Jwts.parserBuilder() // Use parserBuilder()
+            Claims claims = Jwts.parserBuilder()
                     .setSigningKey(secret)
-                    .build() // Call build() on the builder
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
             return claims.get("rol", String.class);

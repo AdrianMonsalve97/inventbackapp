@@ -29,19 +29,16 @@ public class ActualizarProductoUseCase {
         Producto producto = productoRepository.findById(command.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
 
-        // Validar y asignar empresa
         Empresa empresa = empresaRepository.findById(String.valueOf(command.getEmpresaId()))
                 .orElseThrow(() -> new EntityNotFoundException("Empresa no encontrada"));
         producto.setEmpresa(empresa);
 
-        // Validar y asignar categorías
         Set<Categoria> categorias = new HashSet<>(categoriaRepository.findAllById(command.getCategoriasIds()));
         if (categorias.size() != command.getCategoriasIds().size()) {
             throw new IllegalArgumentException("Algunas categorías no existen.");
         }
         producto.setCategorias(categorias);
 
-        // Actualizar demás atributos
         producto.setNombre(command.getNombre());
         producto.setPrecio(command.getPrecio());
 

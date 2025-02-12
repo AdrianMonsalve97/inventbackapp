@@ -10,7 +10,6 @@ import java.util.UUID;
 @Component
 public class EmpresaMapper {
 
-    // Eliminar la asignación del ID porque es autogenerado
     public Empresa toEntity(CrearEmpresaCommand command) {
         return Empresa.builder()
                 .nit(command.getNit())
@@ -21,10 +20,9 @@ public class EmpresaMapper {
                 .build();
     }
 
-    // En el método toDTO, no es necesario convertir el id a String, ya que ya es UUID
     public EmpresaDTO toDTO(Empresa empresa) {
         return EmpresaDTO.builder()
-                .id(UUID.fromString(empresa.getId().toString()))  // Convierte el UUID a String para el DTO
+                .id(UUID.fromString(empresa.getId().toString()))
                 .nit(empresa.getNit())
                 .nombre(empresa.getNombre())
                 .direccion(empresa.getDireccion())

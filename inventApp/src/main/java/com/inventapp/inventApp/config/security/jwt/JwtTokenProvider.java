@@ -9,30 +9,30 @@ package com.inventapp.inventApp.config.security.jwt;
 @Component
 public class JwtTokenProvider {
 
-    private final String secret;  // Make secret final
-    private final long expiration; // Make expiration final
+    private final String secret;
+    private final long expiration;
 
     public JwtTokenProvider(JwtProperties jwtProperties) {
-        this.secret = jwtProperties.getSecret();       // Initialize from JwtProperties
-        this.expiration = jwtProperties.getExpiration(); // Initialize from JwtProperties
+        this.secret = jwtProperties.getSecret();
+        this.expiration = jwtProperties.getExpiration();
     }
 
     public String getUsernameFromToken(String token) {
         try {
-            return Jwts.parserBuilder() // Use parserBuilder
+            return Jwts.parserBuilder()
                     .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
         } catch (JwtException | IllegalArgumentException e) {
-            return null; // Or throw an exception if you prefer
+            return null;
         }
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder() // Use parserBuilder
+            Jwts.parserBuilder()
                     .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token);
@@ -48,7 +48,7 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7); // Retorna el token sin la parte "Bearer "
+            return bearerToken.substring(7);
         }
         return null;
     }

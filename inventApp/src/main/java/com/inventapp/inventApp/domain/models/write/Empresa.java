@@ -21,8 +21,8 @@
     public class Empresa {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)  // Se asegura de que el UUID sea generado automáticamente
-        private UUID id;  // El tipo UUID para el campo id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private UUID id;
 
         @NotNull
         @Column(nullable = false, unique = true, length = 15)

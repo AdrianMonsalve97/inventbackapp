@@ -12,28 +12,21 @@ import lombok.Setter;
 @Builder
 public class EmpresaDTO {
 
-    private UUID id;  // Usar UUID en lugar de String
-
+    private UUID id;
     @NotNull
     @Size(min = 8, max = 15)
     private String nit;
-
     @NotNull
     @Size(min = 2, max = 100)
     private String nombre;
-
     @NotNull
     @Size(min = 5, max = 200)
     private String direccion;
-
     @NotNull
     @Size(min = 7, max = 20)
     private String telefono;
-
     @NotNull
-    private UUID adminId;  // Cambiar a UUID en lugar de String para mantener consistencia
-
-    // Constructor opcional si prefieres usarlo en lugar de @Builder
+    private UUID adminId;
     public EmpresaDTO(UUID id, String nit, String nombre, String direccion, String telefono, UUID adminId) {
         this.id = id;
         this.nit = nit;

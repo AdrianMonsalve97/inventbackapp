@@ -21,14 +21,12 @@ public class ListarProductosPorEmpresaUseCase {
     public List<ProductoDTO> ejecutar(ListarProductosPorEmpresaQuery query) {
         String empresaId = (query.getNit());
 
-        // Validación si el ID de empresa es nulo
         if (empresaId == null) {
             throw new IllegalArgumentException("El ID de la empresa no puede ser nulo.");
         }
 
         List<Producto> productos = productoRepository.findByEmpresaNit(empresaId);
 
-        // Validación si la empresa no tiene productos
         if (productos.isEmpty()) {
             throw new RuntimeException("No se encontraron productos para la empresa con ID: " + empresaId);
         }

@@ -24,14 +24,12 @@
             private final OrdenCommandHandler ordenCommandHandler;
             private final OrdenQueryHandler ordenQueryHandler;
 
-            // Crear una nueva orden
             @PostMapping
             public ResponseEntity<Orden> crearOrden(@RequestBody CrearOrdenCommand command) {
                 Orden orden = ordenCommandHandler.handle(command);
                 return ResponseEntity.ok(orden);
             }
 
-            // Actualizar una orden existente
             @PutMapping("/{id}")
             public ResponseEntity<Orden> actualizarOrden(@PathVariable UUID id, @RequestBody ActualizarOrdenCommand command) {
                 command = new ActualizarOrdenCommand(id, command.getProductoIds(), command.getClienteId());
@@ -39,21 +37,18 @@
                 return orden != null ? ResponseEntity.ok(orden) : ResponseEntity.notFound().build();
             }
 
-            // Eliminar una orden
             @DeleteMapping("/{id}")
             public ResponseEntity<Void> eliminarOrden(@PathVariable UUID id) {
                 boolean eliminado = ordenCommandHandler.handle(new EliminarOrdenCommand(id));
                 return eliminado ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
             }
 
-            // Obtener todas las órdenes de un cliente
             @GetMapping("/cliente/{clienteId}")
             public ResponseEntity<List<Orden>> obtenerOrdenesPorCliente(@PathVariable UUID clienteId) {
                 List<Orden> ordenes = ordenQueryHandler.obtenerOrdenesPorCliente(clienteId);
                 return ResponseEntity.ok(ordenes);
             }
 
-            // Obtener una orden por ID
             @GetMapping("/{id}")
             public ResponseEntity<Orden> obtenerOrden(@PathVariable UUID id) {
                 Optional<Orden> ordenOptional = ordenQueryHandler.obtenerOrden(id);

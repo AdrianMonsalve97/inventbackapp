@@ -30,24 +30,17 @@ public class CrearProductoUseCase {
 
     @Transactional
     public ProductoDTO ejecutar(CrearProductoCommand command) {
-        // ✅ 1️⃣ Buscar la empresa por su NIT
         Empresa empresa = empresaRepository.findByNit(command.getEmpresaNit())
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la empresa con el NIT: " + command.getEmpresaNit()));
 
-        // ✅ 2️⃣ Manejo seguro de categorías
         Set<Categoria> categorias = (command.getCategorias() == null) ? Set.of() :
                 command.getCategorias().stream()
                         .map(nombre -> categoriaRepository.findByNombre(nombre)
                                 .orElseThrow(() -> new EntityNotFoundException("La categoría con nombre '" + nombre + "' no existe.")))
                         .collect(Collectors.toSet());
 
-        // ✅ 3️⃣ Convertir el precio a USD
         double precioConvertido = currencyConversionService.convertirMoneda(command.getMoneda(), command.getPrecio(), "USD");
-
-        // ✅ 4️⃣ Crear el producto con los datos correctos
         Producto producto = productoMapper.toEntity(command, empresa, categorias, precioConvertido);
-
-        // ✅ 5️⃣ Guardar y devolver el producto creado
         productoRepository.save(producto);
         return productoMapper.toDTO(producto);
     }

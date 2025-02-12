@@ -47,13 +47,11 @@ public class GenerarPDFInventarioUseCase {
                 contentStream.showText("Inventario de Productos");
                 contentStream.endText();
 
-                // Posiciones iniciales
                 int margin = 50;
                 int yPosition = 700;
                 int rowHeight = 20;
                 int colWidth = 100;
 
-                // Encabezados de tabla
                 String[] headers = {"Código", "Nombre", "Características", "Precio", "Moneda", "Cantidad"};
 
                 contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
@@ -71,8 +69,6 @@ public class GenerarPDFInventarioUseCase {
                     contentStream.endText();
                     margin += colWidth;
                 }
-
-                // Dibujar los datos de los productos
                 margin = 50;
                 yPosition -= rowHeight;
                 contentStream.setFont(PDType1Font.HELVETICA, 10);

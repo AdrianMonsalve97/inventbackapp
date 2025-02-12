@@ -38,7 +38,6 @@ public class ListarUsuariosHandlers {
             usuarios = usuarioRepository.findByEstadoUsuario(query.getEstadoUsuario())
                     .stream().map(this::convertToDTO).collect(Collectors.toList());
         } else {
-            // Si no se proporciona ningún filtro, obtenemos todos los usuarios
             usuarios = usuarioRepository.findAll()
                     .stream().map(this::convertToDTO).collect(Collectors.toList());
         }
