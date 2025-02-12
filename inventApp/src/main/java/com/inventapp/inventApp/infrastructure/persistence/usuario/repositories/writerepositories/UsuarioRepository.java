@@ -26,7 +26,7 @@ package com.inventapp.inventApp.infrastructure.persistence.usuario.repositories.
         boolean existsByUsername(String username);
         boolean existsByEmail(String email);
 
-        List<Usuario> findByUsername(String username);
+        Optional<Usuario> findByUsername(String username);
 
         List<Usuario> findByRol(Rol rol);
 

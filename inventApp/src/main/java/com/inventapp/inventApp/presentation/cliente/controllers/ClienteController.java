@@ -47,7 +47,7 @@ public class ClienteController {
     }
 
     // Obtener todos los clientes
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<Cliente>> obtenerClientes() {
         List<Cliente> clientes = clienteQueryHandler.obtenerClientes();
         return ResponseEntity.ok(clientes);

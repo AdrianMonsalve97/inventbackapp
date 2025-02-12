@@ -1,45 +1,58 @@
 package com.inventapp.inventApp.config.security.jwt;
 
-    import com.inventapp.inventApp.domain.exceptions.UsuarioNoAutorizadoException;
-    import io.jsonwebtoken.Claims;
-    import io.jsonwebtoken.JwtException;
-    import io.jsonwebtoken.Jwts;
-    import jakarta.servlet.http.HttpServletRequest;
-    import org.springframework.boot.context.properties.ConfigurationProperties;
-    import org.springframework.context.annotation.Configuration;
+import com.inventapp.inventApp.domain.exceptions.UsuarioNoAutorizadoException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-    import lombok.*;
+@Configuration
+@ConfigurationProperties(prefix = "jwt")
+@Getter
+@Setter
+public class JwtProperties {
+    private String secret;
+    private long expiration;
 
-    @Configuration
-    @ConfigurationProperties(prefix = "jwt")
-    @Getter
-    @Setter
-    public class JwtProperties {
-        private String secret;
-        private long expiration;
-        public String resolveToken(HttpServletRequest request) {
-            String bearerToken = request.getHeader("Authorization");
-            if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-                return bearerToken.substring(7);
-            }
-            return null;
-        }
-
-        public boolean validateToken(String token) {
-            try {
-                Jwts.parser().setSigningKey(secret).build().parse(token);
-                return true;
-            } catch (JwtException | IllegalArgumentException e) {
-                throw new UsuarioNoAutorizadoException("Token inválido o expirado");
-            }
-        }
-
-        public String getUsernameFromToken(String token) {
-            Claims claims = Jwts.parser()
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder() // Use parserBuilder()
                     .setSigningKey(secret)
-                    .build()
+                    .build() // Call build() on the builder
+                    .parse(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new UsuarioNoAutorizadoException("Token inválido o expirado");
+        }
+    }
+
+    public String getUsernameFromToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder() // Use parserBuilder()
+                    .setSigningKey(secret)
+                    .build() // Call build() on the builder
                     .parseClaimsJws(token)
                     .getBody();
             return claims.getSubject();
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new UsuarioNoAutorizadoException("Token inválido o expirado");
         }
     }
+
+    public String getRoleFromToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder() // Use parserBuilder()
+                    .setSigningKey(secret)
+                    .build() // Call build() on the builder
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.get("rol", String.class);
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new UsuarioNoAutorizadoException("Token inválido o expirado");
+        }
+    }
+}

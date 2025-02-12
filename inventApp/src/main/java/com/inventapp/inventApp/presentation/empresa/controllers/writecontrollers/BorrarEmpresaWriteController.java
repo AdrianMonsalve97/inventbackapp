@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class BorrarEmpresaWriteController {
     private final BorrarEmpresaHandler borrarEmpresaHandler;
 
-    @DeleteMapping("/borrar")
+    @DeleteMapping("/borrar/{nombre}")
     @Operation(summary = "Borrar empresa", description = "Elimina una empresa por su nombre")
-    public ResponseEntity<String> borrarEmpresa(@Valid @RequestBody BorrarEmpresaCommand command) {
-        borrarEmpresaHandler.handle(command);
+    public ResponseEntity<String> borrarEmpresa(@PathVariable String nombre) {
+        borrarEmpresaHandler.handle(new BorrarEmpresaCommand(nombre));
         return ResponseEntity.ok("Empresa eliminada correctamente");
     }
+
+
 }

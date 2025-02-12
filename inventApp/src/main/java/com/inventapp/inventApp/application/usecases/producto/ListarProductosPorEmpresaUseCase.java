@@ -1,6 +1,7 @@
 package com.inventapp.inventApp.application.usecases.producto;
 
 import com.inventapp.inventApp.application.queries.queries.producto.ListarProductosPorEmpresaQuery;
+import com.inventapp.inventApp.domain.dtos.empresa.EmpresaDTO;
 import com.inventapp.inventApp.domain.dtos.producto.ProductoDTO;
 import com.inventapp.inventApp.domain.models.write.Producto;
 import com.inventapp.inventApp.domain.repositories.producto.IProductoRepository;
@@ -18,14 +19,14 @@ public class ListarProductosPorEmpresaUseCase {
     private final IProductoRepository productoRepository;
 
     public List<ProductoDTO> ejecutar(ListarProductosPorEmpresaQuery query) {
-        UUID empresaId = query.getEmpresaId();
+        String empresaId = (query.getNit());
 
         // Validación si el ID de empresa es nulo
         if (empresaId == null) {
             throw new IllegalArgumentException("El ID de la empresa no puede ser nulo.");
         }
 
-        List<Producto> productos = productoRepository.findByEmpresaId(empresaId);
+        List<Producto> productos = productoRepository.findByEmpresaNit(empresaId);
 
         // Validación si la empresa no tiene productos
         if (productos.isEmpty()) {

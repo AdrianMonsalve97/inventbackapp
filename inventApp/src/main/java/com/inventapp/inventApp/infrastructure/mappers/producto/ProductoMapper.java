@@ -36,8 +36,8 @@ public class ProductoMapper {
                 .precio(producto.getPrecio())
                 .moneda(producto.getMoneda())
                 .precioConvertido(producto.getPrecioConvertido())
-                .empresaId(producto.getEmpresa().getId())
-                .categorias(producto.getCategorias().stream().map(Categoria::getId).collect(Collectors.toSet()))
+                .empresaNit(producto.getEmpresa().getNit())
+                .categorias(producto.getCategorias().stream().map(Categoria::getNombre).collect(Collectors.toSet()))
                 .activo(producto.isActivo())
                 .build();
     }

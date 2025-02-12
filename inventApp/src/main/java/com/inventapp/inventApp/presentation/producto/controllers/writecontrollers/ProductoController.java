@@ -8,6 +8,7 @@ import com.inventapp.inventApp.application.usecases.producto.ActualizarProductoU
 import com.inventapp.inventApp.application.usecases.producto.BorrarProductoUseCase;
 import com.inventapp.inventApp.application.usecases.producto.CrearProductoUseCase;
 import com.inventapp.inventApp.domain.dtos.producto.ProductoDTO;
+import com.inventapp.inventApp.domain.models.write.Producto;
 import com.inventapp.inventApp.domain.repositories.producto.IProductoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +30,11 @@ public class ProductoController {
 
     @PostMapping("/crear")
     public ResponseEntity<ProductoDTO> crearProducto(@RequestBody CrearProductoCommand command) {
-        try {
-            command.setEmpresaId(command.getEmpresaId().toString());  // Conversión manual
-            ProductoDTO productoCreado = crearProductoUseCase.ejecutar(command);
-            return ResponseEntity.ok(productoCreado);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        ProductoDTO nuevoProducto = crearProductoUseCase.ejecutar(command);
+        return ResponseEntity.ok(nuevoProducto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/actualizarproducto/{id}")
     public ResponseEntity<Void> actualizarProducto(@PathVariable UUID id, @RequestBody ActualizarProductoCommand command) {
         command.setId(id);
         actualizarProductoUseCase.ejecutar(command);
@@ -46,29 +42,32 @@ public class ProductoController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminarproducto/{id}")
     public ResponseEntity<Void> borrarProducto(@PathVariable UUID id) {
         borrarProductoUseCase.ejecutar(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/listproductos")
     public ResponseEntity<List<ProductoDTO>> listarProductos() {
         List<ProductoDTO> productos = productoRepository.findAll().stream().map(ProductoDTO::new).toList();
         return ResponseEntity.ok(productos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/productoxid/{id}")
     public ResponseEntity<ProductoDTO> obtenerProductoPorId(@PathVariable UUID id) {
         return productoRepository.findById(id)
                 .map(producto -> ResponseEntity.ok(new ProductoDTO(producto)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/empresa/{empresaId}")
-    public ResponseEntity<List<ProductoDTO>> listarPorEmpresa(@PathVariable UUID empresaId) {
-        ListarProductosPorEmpresaQuery query = new ListarProductosPorEmpresaQuery(empresaId);
+    @GetMapping("/productos/listarxnit/{nit}")
+    public ResponseEntity<List<ProductoDTO>> listarPorNit(@PathVariable String nit) {
+        ListarProductosPorEmpresaQuery query = new ListarProductosPorEmpresaQuery(nit);
         List<ProductoDTO> productos = listarProductosPorEmpresaHandler.ejecutar(query);
         return ResponseEntity.ok(productos);
     }
+
+
+
 }

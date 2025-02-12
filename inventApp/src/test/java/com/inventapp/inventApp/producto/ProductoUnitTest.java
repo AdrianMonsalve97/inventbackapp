@@ -1,4 +1,4 @@
-﻿package com.inventapp.inventApp.producto;
+package com.inventapp.inventApp.producto;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;

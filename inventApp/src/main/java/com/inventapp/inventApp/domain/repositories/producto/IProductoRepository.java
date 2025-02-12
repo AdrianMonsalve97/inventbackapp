@@ -11,4 +11,7 @@ public interface IProductoRepository extends JpaRepository<Producto, UUID> {
     List<Producto> findByEmpresaId(UUID empresaId);
 
     List<Producto> findByEmpresaNombre(String nombre);
+
+    List<Producto> findByEmpresaNit(String nit);
+
 }

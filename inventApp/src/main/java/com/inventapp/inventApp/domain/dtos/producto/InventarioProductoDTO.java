@@ -1,23 +1,22 @@
-package com.inventapp.inventApp.application.commands.command.producto;
+package com.inventapp.inventApp.domain.dtos.producto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CrearProductoCommand {
+public class InventarioProductoDTO {
     private String codigo;
     private String nombre;
     private String caracteristicas;
     private double precio;
     private String moneda;
+    private long cantidad;
     private String empresaNit;
     private Set<String> categorias;
+    private boolean activo;
 }

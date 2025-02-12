@@ -21,57 +21,47 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class Producto {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     @NotNull
     @Size(min = 2, max = 50)
     @Column(unique = true, nullable = false)
-    private String codigo;  // Nuevo campo: Código único del producto
-
+    private String codigo;
     @NotNull
     @Size(min = 2, max = 100)
     @Column(nullable = false)
     private String nombre;
-
+    @Column
+    private long cantidad;
     @Size(max = 255)
-    private String caracteristicas;  // Nuevo campo: Descripción del producto
-
+    private String caracteristicas;
     @NotNull
     @Positive
     @Column(nullable = false)
     private double precio;
-
     @NotNull
     @Size(min = 3, max = 3)
     @Column(nullable = false)
-    private String moneda;  // Nuevo campo: Moneda del precio (ejemplo: USD, COP, EUR)
-
+    private String moneda;
     @NotNull
     @Positive
-    private double precioConvertido;  // Nuevo campo: Precio convertido a una moneda base
-
+    private double precioConvertido;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "empresa_id", nullable = false)
+    @JoinColumn(name = "empresa_nit", nullable = false)
     private Empresa empresa;
-
     @ManyToMany
     @JoinTable(
             name = "producto_categoria",
             joinColumns = @JoinColumn(name = "producto_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
-    private Set<Categoria> categorias = new HashSet<>();  // Relación con Categoría (muchos a muchos)
-
+    private Set<Categoria> categorias = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime fechaCreacion;
-
     @UpdateTimestamp
     private LocalDateTime fechaActualizacion;
-
     @Column(nullable = false)
     private boolean activo = true;
 }

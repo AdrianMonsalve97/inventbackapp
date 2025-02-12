@@ -17,7 +17,7 @@ public class ObtenerUsuarioPorUsernameHandler {
 
     public UsuarioLogDTO handle(ObtenerUsuarioPorUsernameQuery query) {
         Optional<Usuario> usuario = iUsuarioRepository.findByUsernameNative(query.getUsername());
-        return usuario.map(u -> new UsuarioLogDTO(u.getUsername(),u.getPassword(),u.getRol()))
+        return usuario.map(u -> new UsuarioLogDTO(u.getId(), u.getUsername(), u.getPassword(), u.getRol()))
                 .orElseThrow(() -> new UsuarioNoEncontradoException("Usuario no encontrado"));
     }
 }

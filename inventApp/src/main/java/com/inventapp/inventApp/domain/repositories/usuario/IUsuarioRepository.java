@@ -23,7 +23,7 @@ package com.inventapp.inventApp.domain.repositories.usuario;
         boolean existsByUsername(String username);
         boolean existsByEmail(String email);
         Usuario save(Usuario usuario);
-        List<Usuario> findByUsername(String username);
+        Optional<Usuario> findByUsername(String username);
         List<Usuario> findByRol(Rol rol);
         List<Usuario> findByEstadoUsuario(EstadoUsuario estadoUsuario);
         List<Usuario> findByUsernameAndEmailAndRolAndEstadoUsuario(String username, String email, Rol rol, EstadoUsuario estadoUsuario);

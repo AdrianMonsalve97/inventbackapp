@@ -20,12 +20,13 @@ public class UsuarioLogDTO {
     private String password;
     private EstadoUsuario estadoUsuario;
 
-    public UsuarioLogDTO(@NotNull String username, String password, Rol rol
-    ) {
+    public UsuarioLogDTO(@NotNull UUID id, @NotNull String username, String password, Rol rol) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.rol = rol;
     }
+
 
 
 }

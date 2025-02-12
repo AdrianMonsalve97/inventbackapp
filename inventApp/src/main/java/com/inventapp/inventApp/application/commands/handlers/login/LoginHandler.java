@@ -1,29 +1,28 @@
 package com.inventapp.inventApp.application.commands.handlers.login;
 
+import com.inventapp.inventApp.application.usecases.usuario.ObtenerUsuarioPorUsernameUseCase;
 import com.inventapp.inventApp.domain.dtos.login.LoginCommand;
-import com.inventapp.inventApp.domain.exceptions.InvalidCredentialsException;
+import com.inventapp.inventApp.domain.dtos.usuario.LoginResponse;
+import com.inventapp.inventApp.domain.dtos.usuario.UsuarioLogDTO;
 import com.inventapp.inventApp.infrastructure.security.AuthService;
 import org.springframework.stereotype.Component;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component
 public class LoginHandler {
 
     private final AuthService authService;
-    private static final Logger logger = LoggerFactory.getLogger(LoginHandler.class);
+    private final ObtenerUsuarioPorUsernameUseCase obtenerUsuarioPorUsernameUseCase;
 
-    public LoginHandler(AuthService authService) {
+    public LoginHandler(AuthService authService, ObtenerUsuarioPorUsernameUseCase obtenerUsuarioPorUsernameUseCase) {
         this.authService = authService;
+        this.obtenerUsuarioPorUsernameUseCase = obtenerUsuarioPorUsernameUseCase;
     }
 
-    public String handle(LoginCommand command) {
-        try {
-            String token = authService.login(command.getUsername(), command.getPassword());
-            return token;
-        } catch (InvalidCredentialsException e) {
-            logger.error("Intento de inicio de sesión fallido para el usuario: {}", command.getUsername());
-            throw e;  
-        }
+    public LoginResponse handle(LoginCommand command) {
+        return authService.login(command.getUsername(), command.getPassword());
+    }
+
+    public UsuarioLogDTO obtenerUsuario(LoginCommand command) {
+        return obtenerUsuarioPorUsernameUseCase.ejecutar(command.getUsername());
     }
 }
