@@ -22,24 +22,20 @@
         private final EliminarCategoriaUseCase eliminarCategoriaUseCase;
         private final ConsultarCategoriasUseCase consultarCategoriasUseCase;
 
-
         @PostMapping("/crear")
         public ResponseEntity<CategoriaDTO> crear(@RequestBody @Valid CrearCategoriaCommand command) {
             return ResponseEntity.ok(crearCategoriaUseCase.ejecutar(command));
         }
-
-        @PutMapping
+        @PutMapping("/actualizar")
         public ResponseEntity<CategoriaDTO> actualizar(@RequestBody ActualizarCategoriaCommand command) {
             return ResponseEntity.ok(actualizarCategoriaUseCase.ejecutar(command));
         }
-
         @DeleteMapping("/{id}")
         public ResponseEntity<Void> eliminar(@PathVariable UUID id) {
             eliminarCategoriaUseCase.ejecutar(id);
             return ResponseEntity.noContent().build();
         }
-
-        @GetMapping("/categorias")
+        @GetMapping("/listarcategorias")
         @PreAuthorize("hasAuthority('ADMINISTRADOR')")
         public ResponseEntity<List<CategoriaDTO>> listar() {
             return ResponseEntity.ok(consultarCategoriasUseCase.ejecutar());

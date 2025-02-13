@@ -26,4 +26,7 @@ public class OrdenQueryHandler {
     public Optional<Orden> obtenerOrden(UUID id) {
         return ordenRepository.findById(id);
     }
+    public List<Orden> obtenerOrdenes(){
+        return ordenRepository.findAll();
+    }
 }

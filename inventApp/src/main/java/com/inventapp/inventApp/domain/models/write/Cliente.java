@@ -19,6 +19,7 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nombre;
     private String direccion;

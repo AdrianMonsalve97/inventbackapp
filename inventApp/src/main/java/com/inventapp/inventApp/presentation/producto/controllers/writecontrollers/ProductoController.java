@@ -49,11 +49,10 @@ public class ProductoController {
     }
 
     @GetMapping("/listproductos")
-    public ResponseEntity<List<ProductoDTO>> listarProductos() {
+    public ResponseEntity<List<ProductoDTO>> listarProductosApi() {
         List<ProductoDTO> productos = productoRepository.findAll().stream().map(ProductoDTO::new).toList();
         return ResponseEntity.ok(productos);
     }
-
     @GetMapping("/productoxid/{id}")
     public ResponseEntity<ProductoDTO> obtenerProductoPorId(@PathVariable UUID id) {
         return productoRepository.findById(id)
@@ -67,7 +66,5 @@ public class ProductoController {
         List<ProductoDTO> productos = listarProductosPorEmpresaHandler.ejecutar(query);
         return ResponseEntity.ok(productos);
     }
-
-
 
 }

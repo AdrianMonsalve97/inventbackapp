@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class CrearEmpresaWriteController {
     private final CrearEmpresaHandler crearEmpresaHandler;
 
-    @PostMapping
+    @PostMapping("/crear")
     @Operation(summary = "Crear una nueva empresa", description = "Este endpoint permite registrar una nueva empresa en el sistema.")
     public ResponseEntity<EmpresaDTO> crearEmpresa(@Valid @RequestBody CrearEmpresaCommand command) {
         EmpresaDTO empresaCreada = crearEmpresaHandler.handle(command);

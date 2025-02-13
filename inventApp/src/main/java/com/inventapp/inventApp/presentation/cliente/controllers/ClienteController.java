@@ -30,13 +30,13 @@ public class ClienteController {
         return ResponseEntity.ok(cliente);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Cliente> actualizarCliente(@PathVariable UUID id, @RequestBody ActualizarClienteCommand command) {
         command = new ActualizarClienteCommand(id, command.getNombre(), command.getDireccion(), command.getTelefono());
         Cliente cliente = clienteCommandHandler.handle(command);
         return cliente != null ? ResponseEntity.ok(cliente) : ResponseEntity.notFound().build();
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable UUID id) {
         boolean eliminado = clienteCommandHandler.handle(new EliminarClienteCommand(id));
         return eliminado ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
@@ -47,7 +47,7 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("obetenerclientexud/{id}")
     public ResponseEntity<Cliente> obtenerCliente(@PathVariable UUID id) {
         Optional<Cliente> clienteOptional = clienteQueryHandler.obtenerCliente(id);
         return clienteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());

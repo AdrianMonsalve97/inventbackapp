@@ -45,9 +45,9 @@ public class AuthService {
         return Jwts.builder()
                 .setSubject(usuarioLogDTO.getUsername())
                 .claim("username", usuarioLogDTO.getUsername())
-                .claim("rol", usuarioLogDTO.getRol().getNombre().toUpperCase())            .setIssuedAt(new Date())
+                .claim("rol", usuarioLogDTO.getRol().getNombre().toUpperCase()).setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(Keys.hmacShaKeyFor(Base64.getDecoder().decode(jwtProperties.getSecret())), SignatureAlgorithm.HS256)
+                .signWith(Keys.hmacShaKeyFor(Base64.getDecoder().decode(jwtProperties.getSecret())))
                 .compact();
     }
 }
